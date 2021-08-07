@@ -3,5 +3,6 @@ from .viewsets import *
 
 urlpatterns = [
     path('', store, name='store' ),
+    path('register/', registerUser, name='register'),
 
 ]
