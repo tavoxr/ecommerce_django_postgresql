@@ -2,10 +2,11 @@ import django
 from django.shortcuts import render, redirect
 from ..forms import RegisterUserForm
 from ..models import *
+from ..decorators import unauthenticated_user
 from django.contrib import messages
 import re 
 
-
+@unauthenticated_user
 def registerUser(request):
 
     form =  RegisterUserForm()
@@ -28,7 +29,7 @@ def registerUser(request):
                     form.save()
                     username = form.cleaned_data.get('username')
 
-                    messages.success(request, 'Account was created for' + username )
+                    messages.success(request, 'Account was created for ' + username )
                     return redirect('login')
             else:
                 messages.error(request, "Passwords don't match")
