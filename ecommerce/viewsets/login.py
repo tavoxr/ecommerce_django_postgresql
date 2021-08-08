@@ -17,7 +17,10 @@ def loginPage(request):
 
         if user is not None:
             login(request, user)
-            return redirect('store')
+            if request.user.groups.all()[0].name == 'admin':
+                return redirect('dashboard')
+            else:
+                return redirect('store')
         
         else:
             messages.info(request, 'Username or Password are incorrect')
