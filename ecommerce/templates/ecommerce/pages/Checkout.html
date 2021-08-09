@@ -1,0 +1,163 @@
+{% extends 'ecommerce/Main.html' %}
+{%load static%}
+
+{% block content %}
+
+<div class="row mt-4">
+    <div class="col-12 col-md-6 col-lg-6">
+        <div class="card card-body mb-3">
+            <form id="form">
+                <div class="row mt-2 mb-3" id="user-info" >
+                    <div class="col">
+                        <input type="text" name="name" placeholder="Name"  class="form-control"/>
+                    </div>
+                    <div class="col">
+                        <input type="text" name="email" placeholder="Email" class="form-control" />
+                    </div>
+                    
+                </div>
+                <hr />
+                <h5>Shipping Information:</h5>
+                <hr />
+                <div class="row mt-4" id="shipping-info">
+                    <div class="col">
+                        <input type="text" name="address" placeholder="Address.." class="form-control"/>
+                        <input type="text" name="state" placeholder="State.." class="form-control mt-4"/>
+
+                    </div>
+                    <div class="col">
+                        <input type="text" name="city" placeholder="City.." class="form-control"/>
+                         <input type="text" name="zipcode"   placeholder="Zip Code.." class="form-control mt-4"/>
+
+                    </div>
+                    <div>
+                        <hr class="mt-4"/>
+                    </div>
+                    <div class="form-group mt-1">
+                        <button type="submit" id="form-button" class="btn btn-success form-control">Continue</button>
+                    </div>
+
+                </div>
+                
+
+          
+            </form>
+        </div>
+        <div class="card card-body mt-4 mb-3 hidden" id="payment-info">
+            <small class="mb-3">Paypal Options</small>
+            <button class="btn btn-primary " id="make-payment" >Make Payment</button>
+        </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-6">
+        <div class="card card-body mb-3 ">
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{% url 'store' %}" class="btn btn-outline-secondary btn-inblock"><i class="fas fa-arrow-left"></i> &nbsp; Back to Cart</a>
+                </div>  
+                <hr class="mt-4"/>
+                <h5>Order Summary:</h5>
+                <hr />
+                <div class="table-responsive">
+                    <table class="table">
+                        
+                        <tbody>
+                            {% for item in items %}
+                            <tr class="text-center">
+                                <td class="align-middle"><img src="{{ item.product.image.url }}" class=" img-fluid p-0 m-1" width="90"  id="productImgList" /></td>
+                                <td class="align-middle">{{item.product.name}}</td>
+                                <td class="align-middle">${{item.product.price}}</td>
+                                <td class="align-middle">X{{item.quantity}}</td>
+                                
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <h5>Items: {{order.get_total_items}}</h5>
+                <h5>Total: $ {{order.get_total_order_ammount}}</h5>
+                
+                
+                
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    
+    const form = document.getElementById('form');
+    const makePaymentBtn = document.getElementById('make-payment');
+    var total = '{{order.get_total_order_ammount}}';
+
+    if(user != 'AnonymousUser'){
+        document.getElementById('user-info').innerHTML = '';
+    }
+    
+   
+    form.addEventListener('submit',(e)=>{
+        e.preventDefault();
+        console.log("form submited")
+
+        document.getElementById('form-button').classList.add('hidden')
+        document.getElementById('payment-info').classList.remove('hidden')
+
+    });
+
+    makePaymentBtn.addEventListener('click', ()=>{
+        submitFormData()
+    })
+
+    function submitFormData(){
+        console.log('Payment button click')
+
+        var userFormData = {
+            'name':  null,
+            'email': null,
+            'total': total
+        }
+
+        var shippingInfo = {
+            'address': form.address.value? form.address.value : null,
+            'city': form.city.value ? form.city.value: null,
+            'state': form.state.value ? form.state.value: null,
+            'zipcode': form.zipcode.value ? form.zipcode.value : null,
+        }
+
+        if(user == 'AnonymousUser'){
+            userFormData.name = form.name.value;
+            userFormData.email =  form.email.value;
+        }
+
+        
+        console.log('userFormData', userFormData)
+        console.log('shipping info', shippingInfo)
+        
+        const url = '/process_order/';
+
+        fetch(url, {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({
+                'form': userFormData,
+                'shipping': shippingInfo
+            }),
+        })
+        .then((response)=> response.json())
+        .then((data)=>{
+            console.log('success', data);
+            alert('Transaction completed');
+
+            cart = {}
+            
+            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+            
+            window.location.href = "{% url 'store'  %}"
+        })
+
+
+    }
+
+</script>
+
+{% endblock %}

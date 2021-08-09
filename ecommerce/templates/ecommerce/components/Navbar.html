@@ -27,8 +27,8 @@
                 <a href="{% url 'login' %}" class="btn btn-warning "> Login </a>
             {% endif %} 
 
-            <a href="#" id="cartLink" class=""><i id="cart-icon" class="fas fa-shopping-cart text-white"></i></a>
-            <p id="cart-total"></p>
+            <a href="{% url 'cart' %}" id="cartLink" class=""><i id="cart-icon" class="fas fa-shopping-cart text-white"></i></a>
+            <p id="cart-total">{{cartItems}}</p>
         </div>
         
       </div>
