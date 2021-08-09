@@ -50,3 +50,7 @@ body{
 .hidden{
 	display: none!important;
 }
+
+#toggleMenuArrow{
+	font-size: 50px;
+}

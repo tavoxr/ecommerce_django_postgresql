@@ -14,7 +14,21 @@
 
     <!--Main CSS-->
     <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
-  
+
+    <!------------------------------------------------------------------------------------------------------------->  
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../../static/lib/adminLTE3.1.0/plugins/fontawesome-free/css/all.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../../static/lib/adminLTE3.1.0/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../../static/lib/adminLTE3.1.0/dist/css/adminlte.min.css">
+    
+
+    <!------------------------------------------------------------------------------------------------------------->  
+
     <script type="text/javascript">
         var user = '{{request.user}}'
 
@@ -67,17 +81,49 @@
     
     </script>
 </head>
-<body>
-
-    {% include 'ecommerce/components/Navbar.html' %}
-    
-    <div class="container">
-        {% block content%}
-
-        {% endblock %}
-    </div>
+<body class="hold-transition sidebar-collapse layout-fixed layout-navbar-fixed ">
+    <div class="wrapper">
+    {% include 'ecommerce/components/Navbar2.html' %}
+    {% include 'ecommerce/components/Sidebar.html' %}
    
+   
+        
+    <div class="content-wrapper">
+         <!-- Content Header (Page header) -->
+        <section class="content-header">
+         <div class="container">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                    <!--    <h1>Products</h1> -->
+                    </div>
+                </div>
+        </section>
+  
+        <div class="container mt-3">
+            {% block content%}
 
+            {% endblock %}
+        </div>
+    </div>
+        
+</div>
+
+    <!------------------------------------------------------------------------------------------------------------->  
+
+    <!-- jQuery -->
+    <script src="../../../static/lib/adminLTE3.1.0/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../../static/lib/adminLTE3.1.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="../../../static/lib/adminLTE3.1.0/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../../static/lib/adminLTE3.1.0/dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../../../static/lib/adminLTE3.1.0/dist/js/demo.js"></script>
+
+
+
+    <!------------------------------------------------------------------------------------------------------------->  
 
 
      <!--Bootstrap JS-->
