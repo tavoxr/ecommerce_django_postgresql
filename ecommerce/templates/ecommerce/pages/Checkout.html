@@ -45,7 +45,8 @@
         </div>
         <div class="card card-body mt-4 mb-3 hidden" id="payment-info">
             <small class="mb-3">Paypal Options</small>
-            <button class="btn btn-primary " id="make-payment" >Make Payment</button>
+            <div id="paypal-button-container"></div>
+           <!-- <button class="btn btn-primary " id="make-payment" >Make Payment</button> -->
         </div>
     </div>
     <div class="col-12 col-md-6 col-lg-6">
@@ -81,11 +82,54 @@
     </div>
 </div>
 
+ <!-- Include the PayPal JavaScript SDK -->
+ <script src="https://www.paypal.com/sdk/js?client-id=ARGxXsN2VBkei3Q1gDTN1DklfA36R_y07oxuTBPatH_BIYGCSIAWYSc-oDuj0iYF0HhGVTtx0diNqXnQ&currency=USD"></script>
+
+ <script>
+     var total = '{{order.get_total_order_ammount}}'
+
+    // Render the PayPal button into #paypal-button-container
+    paypal.Buttons({
+
+        style: {
+                
+                shape:  'rect',
+                label:  'pay',
+                height: 40
+        },
+
+        // Set up the transaction
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: total
+                    }
+                }]
+            });
+        },
+
+        // Finalize the transaction
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(orderData) {
+
+                submitFormData()
+                 
+                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                var transaction = orderData.purchase_units[0].payments.captures[0];
+                
+            });
+        }
+
+
+    }).render('#paypal-button-container');
+</script>
+
 <script type="text/javascript">
     
     const form = document.getElementById('form');
     const makePaymentBtn = document.getElementById('make-payment');
-    var total = '{{order.get_total_order_ammount}}';
+   
 
     if(user != 'AnonymousUser'){
         document.getElementById('user-info').innerHTML = '';
@@ -101,9 +145,10 @@
 
     });
 
-    makePaymentBtn.addEventListener('click', ()=>{
+   /* makePaymentBtn.addEventListener('click', ()=>{
         submitFormData()
     })
+    */
 
     function submitFormData(){
         console.log('Payment button click')
