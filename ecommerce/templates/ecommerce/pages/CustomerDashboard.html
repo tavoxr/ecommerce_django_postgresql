@@ -1,0 +1,88 @@
+{% extends 'ecommerce/Main.html' %}
+
+{% load static %}
+
+
+{% block content %}
+<style>
+    .view{
+        background-color: #2196f3;
+    }
+    .eye{
+        color: #fff;
+    }
+    .amount{
+        color: #1e88e5 ;
+    }
+    .cardAmmount{
+       
+    }
+</style>
+<div class="row mt-2 mb-5">
+    <div class="col-sm-12 col-md-4">
+        <div class="card card-body cardAmmount">
+            <h1 class="card-title text-center">Total ammount spent:</h1>
+            <h5 class="text-center mt-2 amount">${{totalAmmountSpent}}</h5>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-4">
+        <div class="card card-body">
+            <h1 class="card-title text-center">Total ammount spent this Month:</h1>
+            <h5 class="text-center mt-2  amount">${{totalAmmountSpentPerMonth}}</h5>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-4">
+        <div class="card card-body">
+            <h1 class="card-title text-center">Total orders this Month:</h1>
+            <h5 class="text-center mt-2 amount">{{totalOrdersThisMonth}}</h5>
+        </div>
+    </div>
+    
+
+</div>
+<div class="row ">
+   
+
+<div class="col-sm-12 col-md-12">
+    <h5>LAST 5 ORDERS</h5>
+    <hr/>
+    <div class="card card-body">
+      <div class="table-responsive">
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th>Order #</th>
+                <th>Date Ordered</th>
+                <th>Total</th>
+                <th>View</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+            <tbody>
+                {% if orders  %}
+                {% for order in lastOrders %}
+                    <tr>
+                        <td>{{order.id}}</td>
+                        <td>{{order.date_created}}</td>
+                        <td>${{order.get_total_order_ammount}}</td>
+                        <td><a href="{% url 'orderItems' order.id %}"  class="btn  btn-sm  view"   ><i  class="fas fa-eye eye"></i></a></td>
+                        <td><a href="#" class="btn btn-danger btn-sm" ><i class="fas fa-trash-alt"></i></a></td>
+                    </tr>
+                {% endfor %}
+                
+                {% else %}
+                        <tr>
+                        <td colspan="5"><h5 class="text-center">You don't have orders yet.</h5></td>
+                        </tr>
+                    
+                {% endif %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+</div>
+</div>
+
+
+{% endblock %}

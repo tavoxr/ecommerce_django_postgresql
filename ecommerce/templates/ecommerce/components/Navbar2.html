@@ -1,5 +1,16 @@
 
 {% load static %}
+<style>
+
+#cartItemsBadge{
+ 	font-size:  12px ;
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+#cart-icon{
+  font-size: 20px;
+  margin-right: 4px;
+}
+</style>
  <nav class="main-header navbar navbar-expand navbar-static-top navbar-white navbar-light " >
     <!-- Left navbar links -->
     <ul class="navbar-nav">
@@ -20,7 +31,7 @@
       <li class="nav-item">
         
         <a class="nav-link" href="{% url 'cart' %}">
-          <i class="fas fa-shopping-cart"></i>
+          <i class="fas fa-shopping-cart" id="cart-icon"></i>
           <span class="badge badge-danger navbar-badge" id="cartItemsBadge">{{cartItems}}</span>
         </a>
         

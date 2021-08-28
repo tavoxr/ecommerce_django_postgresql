@@ -1,3 +1,4 @@
+from ecommerce.viewsets.orders import orders
 from ecommerce.viewsets.cart import cart
 from ecommerce.viewsets.checkout import checkout
 from ecommerce.viewsets.login import loginPage
@@ -10,6 +11,8 @@ urlpatterns = [
     path('login/', loginPage, name='login'),
     path('logout/', logoutUser, name= 'logout'),
     path('dashboard/', dashboard, name='dashboard'),
+    path('orders/', orders, name='orders'),
+    path('orderItems/<int:id>/', orderItems, name='orderItems'),
     path('cart/', cart, name='cart'),
     path('checkout/', checkout, name='checkout'),
     path('update_item/', update_cart, name='update_item' ),
