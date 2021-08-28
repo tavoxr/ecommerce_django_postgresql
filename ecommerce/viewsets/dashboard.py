@@ -17,7 +17,8 @@ def dashboard(request):
     user = request.user
 
     customers = User.objects.filter(groups = group )
-    lastOrders =  Order.objects.filter(user = user, complete= True)[0:5]
+    lastOrders = Order.objects.filter(complete=True)[0:5]
+    myLastOrders =  Order.objects.filter(user = user, complete= True)[0:5]
     orders = Order.objects.filter(user = user, complete= True)
     currentMonth =  datetime.date.today().month
     
@@ -57,7 +58,7 @@ def dashboard(request):
     else:
         context = {    
         'orders': orders,
-        'lastOrders': lastOrders,
+        'lastOrders': myLastOrders,
         'cartItems': cartItems,
         'totalAmmountSpent': totalAmmountSpent,
         'totalAmmountSpentPerMonth': totalAmmountSpentPerMonth,
