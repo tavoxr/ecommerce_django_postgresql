@@ -1,0 +1,101 @@
+{% extends 'ecommerce/Main.html' %}
+
+
+{% load static %}
+
+
+{% block content %}
+
+<style>
+    .img-container{
+        width: 100%;
+
+    }
+
+    .img{
+        width: 100%;
+    }
+</style>
+<div class="row d-flex flex-row justify-content-center align-items-center ">
+
+    <div class="col-sm-12 col-md-12 col-lg-4  ">
+        <div class="card ">
+            <div class="card-header">
+                <div class="img-container">
+                    <img src="{{profile.avatar.url}}" class="img"  />
+                    <h3 class="text-center mt-3">{{user.username}}</h3>
+                    
+                </div>
+            </div>            
+
+        </div>
+ 
+
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-8     ">
+        <div class="card ">
+            <div class="card-header">
+                My Profile
+            </div>            
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token  %}
+                    <div class="row mb-4">
+
+                    
+                    <div class="col-sm-12 col-md-12 col-lg-6">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" name="username" id="username" value="{{user.username}}" />
+                    </div>  
+                    <div class="col-sm-12 col-md-12 col-lg-6">
+                        <label for="username" class="form-label">email</label>
+                        <input type="text" class="form-control" name="email" id="email" value="{{user.email}}" />
+                    </div>  
+                </div>
+                <div class="row mb-4">
+
+
+                    <div class="col-sm-12 col-md-12 col-lg-6">
+                        <label for="username" class="form-label">firstname</label>
+                        <input type="text" class="form-control" name="firstname"  id="firstname" value="{{user.first_name}}" />
+                    </div>  
+                    <div class="col-sm-12 col-md-12 col-lg-6">
+                        <label for="username" class="form-label">lastName</label>
+                        <input type="text" class="form-control" name="lastname" id="lastname" value="{{user.last_name}}" />
+                    </div>  
+                </div>
+
+                <div class="row mb-4 ">
+
+
+                    <div class=" col-sm-12 col-md-12 col-lg-6">
+                        <label for="username" class="form-label">phone</label>
+                        <input type="text" class="form-control" name="phone" id="phone" value="{{profile.phone}}" />
+                    </div>  
+                   <!-- <div class="col-sm-12 col-md-12 col-lg-6">
+                        <label for="username" class="form-label">password</label>
+                        <input type="text" class="form-control" name="password" id="password"  />
+                    </div>  
+                -->
+                </div>
+                <div class="row mb-4 ">
+                        <button class="btn btn-success" type="submit">edit</button>
+                </div>
+
+                </form>
+
+            </div>
+
+        </div>
+ 
+
+    </div>
+
+
+
+</div>
+
+
+
+{% endblock %}
+

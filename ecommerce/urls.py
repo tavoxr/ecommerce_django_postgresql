@@ -10,6 +10,7 @@ urlpatterns = [
     path('register/', registerUser, name='register'),
     path('login/', loginPage, name='login'),
     path('logout/', logoutUser, name= 'logout'),
+    path('profile/', profile, name= 'profile'),
     path('dashboard/', dashboard, name='dashboard'),
     path('orders/', orders, name='orders'),
     path('orderItems/<int:id>/', orderItems, name='orderItems'),
